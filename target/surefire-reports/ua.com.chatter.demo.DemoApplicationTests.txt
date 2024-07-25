@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ua.com.chatter.demo.DemoApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.433 s -- in ua.com.chatter.demo.DemoApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.003 s -- in ua.com.chatter.demo.DemoApplicationTests

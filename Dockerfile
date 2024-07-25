@@ -37,6 +37,6 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # Вказуємо команду запуску
-ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-Dspring.profiles.active=server", "-jar", "/app/app.jar"]
 
 

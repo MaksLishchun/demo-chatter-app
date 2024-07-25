@@ -13,7 +13,7 @@ COPY src ./src
 RUN mvn package
 
 # Use a smaller image to run the app
-FROM openjdk:17-jre-slim
+FROM openjdk:17-oracle
 
 # Set the working directory
 WORKDIR /app

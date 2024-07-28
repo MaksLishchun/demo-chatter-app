@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.com.chatter.demo.auth.AuthService;
 import ua.com.chatter.demo.auth.jwt.JwtTokenUtil;
 import ua.com.chatter.demo.model.dto.AuthenticationRequest;
 import ua.com.chatter.demo.model.dto.AuthenticationResponse;
-import ua.com.chatter.demo.model.dto.ChattyDefaultResponse;
+import ua.com.chatter.demo.model.dto.ChatterDefaultResponse;
 import ua.com.chatter.demo.model.dto.ErrorType;
 import ua.com.chatter.demo.model.dto.RegistrationRequest;
+import ua.com.chatter.demo.service.AuthService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -42,10 +42,10 @@ public class AuthController {
             authService.registerUser(request);
 
             return ResponseEntity
-                .ok(new ChattyDefaultResponse(200, "User registered successfully!", null));
+                .ok(new ChatterDefaultResponse(200, "User registered successfully!", null));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest()
-                .body(new ChattyDefaultResponse(400, e.getMessage(), ErrorType.REGISTRATION));
+                .body(new ChatterDefaultResponse(400, e.getMessage(), ErrorType.REGISTRATION));
         }
     }
 

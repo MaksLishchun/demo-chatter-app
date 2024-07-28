@@ -1,5 +1,6 @@
 package ua.com.chatter.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.com.chatter.demo.model.ChatterUser;
+import ua.com.chatter.demo.model.dto.ChatterUserDTO;
+import ua.com.chatter.demo.model.entity.ChatterUserEntity;
 import ua.com.chatter.demo.repository.UserRepository;
 
 @RestController
@@ -22,19 +24,38 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<ChatterUser> getAllUsers() {
-        return userRepository.findAll();
+    public List<ChatterUserDTO> getAllUsers() {
+        return mapEntityToDTO(userRepository.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<ChatterUser> createUser(@RequestBody ChatterUser chatterUser) {
-        ChatterUser savedUser = userRepository.save(chatterUser);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<ChatterUserDTO> createUser(@RequestBody ChatterUserEntity chatterUser) {
+        ChatterUserDTO userDTO = mapEntityToDTO(userRepository.save(chatterUser));
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
-    
-    // POST запит для додавання списку користувачів
-    @PostMapping("/bulk")
-    public List<ChatterUser> createUsers(@RequestBody List<ChatterUser> users) {
-        return userRepository.saveAll(users);
+
+    @PostMapping("/list")
+    public List<ChatterUserDTO> createUsers(@RequestBody List<ChatterUserEntity> users) {
+        return mapEntityToDTO(userRepository.saveAll(users));
+    }
+
+    private List<ChatterUserDTO> mapEntityToDTO(List<ChatterUserEntity> usersEntities) {
+        List<ChatterUserDTO> users = new ArrayList<>();
+        for (ChatterUserEntity elem : usersEntities) {
+            users.add(mapEntityToDTO(elem));
+        }
+
+        return users;
+    }
+
+    private ChatterUserDTO mapEntityToDTO(ChatterUserEntity usersEntities) {
+        return new ChatterUserDTO(usersEntities.getUserId(),
+                usersEntities.getFirstName(),
+                usersEntities.getLastName(),
+                usersEntities.getEmail(),
+                usersEntities.getPhoneNumber(),
+                usersEntities.getDateOfBirth(),
+                usersEntities.getImageUrl(),
+                usersEntities.getLastActiveTime());
     }
 }

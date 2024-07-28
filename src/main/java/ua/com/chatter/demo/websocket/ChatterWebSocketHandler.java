@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import lombok.extern.slf4j.Slf4j;
-import ua.com.chatter.demo.model.ChatterReceivedMessage;
+import ua.com.chatter.demo.model.entity.ChatterMessageEntity;
 
 @Slf4j
 @Component
@@ -59,7 +59,7 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
         Object mesageObj = message.getPayload();
         log.info(String.format("Got message is %s", mesageObj.getClass().getName()));
 
-        ChatterReceivedMessage chatterMessage = objectMapper.readValue(message.getPayload().toString(), ChatterReceivedMessage.class);
+        ChatterMessageEntity chatterMessage = objectMapper.readValue(message.getPayload().toString(), ChatterMessageEntity.class);
 
         for (WebSocketSession elem : sessions) {
             String chatKey = keysMap.get(elem.getId());

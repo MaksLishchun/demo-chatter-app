@@ -1,4 +1,10 @@
-/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/ChatterUser.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/ChatterWebSocketHandler.java
 /Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/DemoApplication.java
-/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/UserController.java
-/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/UserRepository.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/NoteWebSocketConfig.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/WebSocketConfig.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/controller/UserController.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/model/ChatterMessageEntity.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/model/ChatterReceivedMessage.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/model/ChatterUser.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/repository/MessageRepository.java
+/Users/ml/Work/demo-chatter-app/src/main/java/ua/com/chatter/demo/repository/UserRepository.java

@@ -3,20 +3,28 @@ package ua.com.chatter.demo.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import ua.com.chatter.demo.auth.jwt.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
-    private UserService userDetailsService;
+    private JwtRequestFilter jwtRequestFilter;
+
+    // @Autowired
+    // private UserService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,28 +50,21 @@ public class SecurityConfig {
             request.anyRequest().authenticated();
         });
 
+        // Конфігурування форми логіну
         http.formLogin(fL -> fL.loginPage("/login")
                 .usernameParameter("phoneNumber").permitAll()
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login-error"));
+                // Конфігурування логауту
         http.logout(logOut -> logOut.logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "Idea-2e8e7cee")
                 .logoutSuccessUrl("/login"));
 
-        // // Конфігурування форми логіну
-        // http.formLogin(fL -> fL.loginPage("/api/v1/auth/login")
-        //         .usernameParameter("/api/v1/auth/phoneNumber").permitAll()
-        //         .defaultSuccessUrl("/api/v1/auth", true)
-        //         .failureUrl("/api/v1/login-error"));
-        // // Конфігурування логауту
-        // http.logout(logOut -> logOut.logoutUrl("/api/v1/auth/logout")
-        //         .clearAuthentication(true)
-        //         .invalidateHttpSession(true)
-        //         .deleteCookies("JSESSIONID", "Idea-2e8e7cee")
-        //         .logoutSuccessUrl("/api/v1/auth/login"));
-        // Повернення конфігурованого ланцюга безпеки
+                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         return http.build();
     }
 
@@ -72,8 +73,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    // }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
 }

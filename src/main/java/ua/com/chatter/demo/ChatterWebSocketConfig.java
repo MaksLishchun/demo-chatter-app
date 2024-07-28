@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistration;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator;
 
@@ -28,8 +27,11 @@ public class ChatterWebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        WebSocketHandlerRegistration registration =
-                registry.addHandler(new ExceptionWebSocketHandlerDecorator(handler), "/chat");
-        registration.setAllowedOriginPatterns("*");
+        ExceptionWebSocketHandlerDecorator exceptionHandler = new ExceptionWebSocketHandlerDecorator(handler);
+        registry.addHandler(exceptionHandler,  "/chat").setAllowedOriginPatterns("*");
+
+        // WebSocketHandlerRegistration registration =
+        //         registry.addHandler(new ExceptionWebSocketHandlerDecorator(handler), "/chat");
+        // registration.setAllowedOriginPatterns("*");
     }
 }

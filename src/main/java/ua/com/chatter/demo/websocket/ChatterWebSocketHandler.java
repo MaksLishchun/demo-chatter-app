@@ -41,17 +41,10 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
             return;
         }
 
-        log.info("Connection established");
-
-        log.info("ChatterConntection --- size before = " + sessions.size());
-
-
         if (sessions.size() > 1) {
             Set<WebSocketSession> duplicates = findDuplicates(sessions);
             sessions.removeAll(duplicates);
         }
-
-        log.info("ChatterConntection --- size after = " + sessions.size());
 
         sessions.add(session);
         keysMap.put(session.getId(), key);

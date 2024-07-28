@@ -2,7 +2,13 @@ package ua.com.chatter.demo.model;
 
 import java.time.LocalDateTime;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class ChatterReceivedMessage {
+
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private Long ownerId;
     private Long recipientId;
@@ -48,6 +54,10 @@ public class ChatterReceivedMessage {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String toJson() {
+        return GSON.toJson(this, ChatterReceivedMessage.class);
     }
 
 }

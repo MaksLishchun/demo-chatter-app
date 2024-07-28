@@ -1,9 +1,10 @@
-ua/com/chatter/demo/repository/UserRepository.class
-ua/com/chatter/demo/model/ChatterReceivedMessage.class
-ua/com/chatter/demo/ChatterWebSocketConfig.class
+ua/com/chatter/demo/websocket/ChatterWebSocketInterceptor.class
 ua/com/chatter/demo/DemoApplication.class
+ua/com/chatter/demo/websocket/ChatterWebSocketHandler.class
 ua/com/chatter/demo/model/ChatterMessageEntity.class
 ua/com/chatter/demo/repository/MessageRepository.class
-ua/com/chatter/demo/ChatterWebSocketHandler.class
+ua/com/chatter/demo/repository/UserRepository.class
+ua/com/chatter/demo/model/ChatterReceivedMessage.class
 ua/com/chatter/demo/model/ChatterUser.class
+ua/com/chatter/demo/websocket/ChatterWebSocketConfig.class
 ua/com/chatter/demo/controller/UserController.class

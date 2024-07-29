@@ -31,6 +31,11 @@ public class MessagessService {
         return messagesPade.map(content -> mapEntityToDTO(content));
     }
 
+    public ChatterMessageDTO saveMessage(ChatterMessageDTO chatterMessageDTO) {
+        ChatterMessageEntity entity = messagesRepository.save(mapDTOtoEntity(chatterMessageDTO));
+        return mapEntityToDTO(entity);
+    }
+
     private List<ChatterMessageDTO> mapEntityToDTO(List<ChatterMessageEntity> elems) {
         List<ChatterMessageDTO> mappedMessages = new ArrayList<>();
         for (ChatterMessageEntity elem : elems) {
@@ -42,6 +47,14 @@ public class MessagessService {
 
     private ChatterMessageDTO mapEntityToDTO(ChatterMessageEntity elem) {
         return new ChatterMessageDTO(elem.getOwnerId(),
+                elem.getRecipientId(),
+                elem.getDate(),
+                elem.getSender(),
+                elem.getContent());
+    }
+
+    private ChatterMessageEntity mapDTOtoEntity(ChatterMessageDTO elem) {
+        return new ChatterMessageEntity(elem.getOwnerId(),
                 elem.getRecipientId(),
                 elem.getDate(),
                 elem.getSender(),

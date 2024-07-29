@@ -2,6 +2,8 @@ package ua.com.chatter.demo.model.dto;
 
 import java.time.LocalDateTime;
 
+import ua.com.chatter.demo.utils.GsonFormatter;
+
 public class ChatterMessageDTO {
 
     private Long messageId;
@@ -69,5 +71,9 @@ public class ChatterMessageDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String toJson() {
+        return GsonFormatter.GSON.toJson(this, ChatterMessageDTO.class);
     }
 }

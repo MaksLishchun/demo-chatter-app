@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import ua.com.chatter.demo.utils.GsonFormatter;
 
 @Entity
 public class ChatterMessageEntity {
@@ -79,10 +78,6 @@ public class ChatterMessageEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String toJson() {
-        return GsonFormatter.GSON.toJson(this, ChatterMessageEntity.class);
     }
 
 }

@@ -25,7 +25,6 @@ public class SecurityConfig {
 
     // @Autowired
     // private UserService userDetailsService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Відключення захисту від підробки міжсайтових запитів (CSRF)
@@ -41,7 +40,8 @@ public class SecurityConfig {
                     "/api/v1/auth/registration/**",
                     "/api/v1/auth/login",
                     "/api/v1/auth/register",
-                    "/api/v1/actuator/**"
+                    "/api/v1/actuator/**",
+                    "/ws/**"
             // "/register",
             // "/login",
             // "/actuator/**"
@@ -55,15 +55,15 @@ public class SecurityConfig {
                 .usernameParameter("phoneNumber").permitAll()
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login-error"));
-                // Конфігурування логауту
+        // Конфігурування логауту
         http.logout(logOut -> logOut.logoutUrl("/logout")
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "Idea-2e8e7cee")
                 .logoutSuccessUrl("/login"));
 
-                http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-                http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
@@ -76,7 +76,6 @@ public class SecurityConfig {
     // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     // }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

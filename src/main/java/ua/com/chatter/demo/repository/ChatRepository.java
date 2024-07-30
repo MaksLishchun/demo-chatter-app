@@ -24,7 +24,7 @@ public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
             + "WHERE u1.id = :userId1 "
             + "AND u2.id = :userId2 "
             + "AND SIZE(c.users) = 2")
-    boolean existsChatWithTwoUsers(@Param("userId1") Long userId1, @Param("userId2") Long userId2);
+    boolean hasPrivateSimpleChat(@Param("userId1") Long userId1, @Param("userId2") Long userId2);
 
     @Modifying
     @Transactional

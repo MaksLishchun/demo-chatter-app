@@ -5,6 +5,8 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import ua.com.chatter.demo.model.UserActivityStatus;
 
 @Entity
 @Table(name = "users")
@@ -30,6 +33,9 @@ public class UserEntity {
     private String imageUrl;
     private LocalDateTime lastActiveTime;
 
+    @Enumerated(EnumType.STRING)
+    private UserActivityStatus status;
+
 
     @ManyToMany(mappedBy = "users")
     private Set<ChatEntity> chats;
@@ -38,7 +44,7 @@ public class UserEntity {
     private Set<MessageEntity> messages;
 
 
-    public UserEntity(Long id, String firstName, String lastName, String email, String password, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime) {
+    public UserEntity(Long id, String firstName, String lastName, String email, String password, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime, UserActivityStatus status, Set<ChatEntity> chats, Set<MessageEntity> messages) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,8 +54,10 @@ public class UserEntity {
         this.dateOfBirth = dateOfBirth;
         this.imageUrl = imageUrl;
         this.lastActiveTime = lastActiveTime;
+        this.status = status;
+        this.chats = chats;
+        this.messages = messages;
     }
-    
 
     public UserEntity() {
     }
@@ -142,5 +150,15 @@ public class UserEntity {
     public void setMessages(Set<MessageEntity> messages) {
         this.messages = messages;
     }
+
+    public UserActivityStatus getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(UserActivityStatus status) {
+        this.status = status;
+    }
+
+
     
 }

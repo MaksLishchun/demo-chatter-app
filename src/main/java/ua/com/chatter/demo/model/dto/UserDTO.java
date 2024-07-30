@@ -2,6 +2,8 @@ package ua.com.chatter.demo.model.dto;
 
 import java.time.LocalDateTime;
 
+import ua.com.chatter.demo.model.UserActivityStatus;
+
 public class UserDTO {
     private Long userId;
     private String firstName;
@@ -11,13 +13,13 @@ public class UserDTO {
     private String dateOfBirth;
     private String imageUrl;
     private LocalDateTime lastActiveTime;
+    private UserActivityStatus status;
 
 
     public UserDTO() {
     }
 
-
-    public UserDTO(Long userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime) {
+    public UserDTO(Long userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime, UserActivityStatus status) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,8 +28,8 @@ public class UserDTO {
         this.dateOfBirth = dateOfBirth;
         this.imageUrl = imageUrl;
         this.lastActiveTime = lastActiveTime;
+        this.status = status;
     }
-
 
     public Long getUserId() {
         return this.userId;
@@ -93,5 +95,12 @@ public class UserDTO {
         this.lastActiveTime = lastActiveTime;
     }
 
+    public UserActivityStatus getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(UserActivityStatus status) {
+        this.status = status;
+    }
 
 }

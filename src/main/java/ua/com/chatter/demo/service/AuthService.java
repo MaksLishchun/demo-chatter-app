@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import ua.com.chatter.demo.model.dto.RegistrationRequest;
+import ua.com.chatter.demo.model.dto.auth.RegistrationRequest;
 import ua.com.chatter.demo.model.entity.UserEntity;
 import ua.com.chatter.demo.repository.UserRepository;
 

@@ -13,13 +13,13 @@ import org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator
 
 @Configuration
 @EnableWebSocket
-public class ChatterWebSocketConfig implements WebSocketConfigurer {
+public class WebSocketConfig implements WebSocketConfigurer {
     
     @Autowired
     @Qualifier("chatterWebSocketHandler")
     private final WebSocketHandler handler;
 
-    public ChatterWebSocketConfig(@Lazy WebSocketHandler handler) {
+    public WebSocketConfig(@Lazy WebSocketHandler handler) {
         this.handler = handler;
     }
 
@@ -27,7 +27,7 @@ public class ChatterWebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
         ExceptionWebSocketHandlerDecorator exceptionHandler = new ExceptionWebSocketHandlerDecorator(handler);
         registry.addHandler(exceptionHandler,  "/chat")
-            .setAllowedOriginPatterns("*")
-            .addInterceptors(new ChatterWebSocketInterceptor());
+            .setAllowedOriginPatterns("*");
+            // .addInterceptors(new ChatterWebSocketInterceptor());
     }
 }

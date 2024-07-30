@@ -1,10 +1,14 @@
 package ua.com.chatter.demo.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +18,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import ua.com.chatter.demo.model.ChatType;
 
 @Entity
 @Table(name = "chats")
@@ -37,24 +42,35 @@ public class ChatEntity {
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<MessageEntity> messages;
 
+    @Enumerated(EnumType.STRING)
+    private ChatType type;
+
+    private LocalDateTime lastMessageTime;
+    private Long createdBy;
 
     public ChatEntity() {
     }
 
-    public ChatEntity(Long id, String chatName, String chatLogo) {
+    public ChatEntity(Long id, String chatName, String chatLogo, ChatType type, LocalDateTime lastMessageTime, Long createdBy) {
         this.id = id;
         this.chatName = chatName;
         this.chatLogo = chatLogo;
+        this.type = type;
+        this.lastMessageTime = lastMessageTime;
+        this.createdBy = createdBy;
     }
 
-    public ChatEntity(Long chatId, String chatName, String chatLogo, Set<UserEntity> users, Set<MessageEntity> messages) {
-        this.id = chatId;
+
+    public ChatEntity(Long id, String chatName, String chatLogo, Set<UserEntity> users, Set<MessageEntity> messages, ChatType type, LocalDateTime lastMessageTime, Long createdBy) {
+        this.id = id;
         this.chatName = chatName;
         this.chatLogo = chatLogo;
         this.users = users;
         this.messages = messages;
+        this.type = type;
+        this.lastMessageTime = lastMessageTime;
+        this.createdBy = createdBy;
     }
-
 
     public Long getId() {
         return this.id;
@@ -95,6 +111,13 @@ public class ChatEntity {
         this.users.add(user);
     }
 
+    public void addUsers(List<UserEntity> users) {
+        if(this.users == null) {
+            this.users = new HashSet<>();
+        }
+        this.users.addAll(users);
+    }
+
     public Set<MessageEntity> getMessages() {
         return this.messages;
     }
@@ -102,5 +125,30 @@ public class ChatEntity {
     public void setMessages(Set<MessageEntity> messages) {
         this.messages = messages;
     }
+
+    public ChatType getType() {
+        return this.type;
+    }
+
+    public void setType(ChatType type) {
+        this.type = type;
+    }
+
+    public LocalDateTime getLastMessageTime() {
+        return this.lastMessageTime;
+    }
+
+    public void setLastMessageTime(LocalDateTime lastMessageTime) {
+        this.lastMessageTime = lastMessageTime;
+    }
+
+    public Long getCreatedBy() {
+        return this.createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
 
 }

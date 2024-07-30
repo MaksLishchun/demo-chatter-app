@@ -18,8 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import lombok.extern.slf4j.Slf4j;
-import ua.com.chatter.demo.model.dto.MessageDTO;
-import ua.com.chatter.demo.model.dto.MessageRequest;
+import ua.com.chatter.demo.model.dto.message.MessageDTO;
+import ua.com.chatter.demo.model.dto.message.MessageRequest;
 import ua.com.chatter.demo.service.MessagessService;
 
 @Slf4j
@@ -35,37 +35,23 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
-
-        Map<String, Object> attributes = session.getAttributes();
-        Long chatId = (Long) attributes.get("chatId");
-        
-        if (chatId == null) {
-            session.close(CloseStatus.NOT_ACCEPTABLE);
-            return;
-        }
-
         sessions.add(session);
-        keysMap.put(session.getId(), chatId);
         objectMapper.registerModule(new JavaTimeModule());
         log.info("Registered connection");
     }
 
     @Override
     public void handleMessage(@NonNull WebSocketSession session, @NonNull WebSocketMessage<?> message) throws Exception {
-        Map<String, Object> attributes = session.getAttributes();
-        Long userId = (Long) attributes.get("userId");
-        Long chatId = (Long) attributes.get("chatId");
-
-        Object mesageObj = message.getPayload();
-        log.info(String.format("Got message is %s", mesageObj.getClass().getName()));
-
         MessageRequest chatterMessage = objectMapper.readValue(message.getPayload().toString(), MessageRequest.class);
 
-        MessageDTO savedMessage = messagessService.saveMessage(chatterMessage, userId, chatId);
+        keysMap.put(session.getId(), chatterMessage.getChatId());
+
+        log.info("ChatWebSocket handleMessage called");
+        MessageDTO savedMessage = messagessService.saveMessage(chatterMessage);
         
         for (WebSocketSession elem : sessions) {
             Long elemChatId = keysMap.get(elem.getId());
-            if (elem.isOpen() && elemChatId.equals(chatId)) {
+            if (elemChatId != null && elem.isOpen() && elemChatId.equals(chatterMessage.getChatId())) {
                 elem.sendMessage(new TextMessage(savedMessage.toJson()));
             }
         }

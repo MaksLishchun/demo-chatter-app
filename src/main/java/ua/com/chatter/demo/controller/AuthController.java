@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.chatter.demo.auth.jwt.JwtTokenUtil;
-import ua.com.chatter.demo.model.dto.AuthenticationRequest;
-import ua.com.chatter.demo.model.dto.AuthenticationResponse;
 import ua.com.chatter.demo.model.dto.ChatterDefaultResponse;
 import ua.com.chatter.demo.model.dto.ErrorType;
-import ua.com.chatter.demo.model.dto.RegistrationRequest;
+import ua.com.chatter.demo.model.dto.auth.AuthenticationRequest;
+import ua.com.chatter.demo.model.dto.auth.AuthenticationResponse;
+import ua.com.chatter.demo.model.dto.auth.RegistrationRequest;
 import ua.com.chatter.demo.service.AuthService;
 
 @RestController

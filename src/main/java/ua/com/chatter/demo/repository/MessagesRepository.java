@@ -19,6 +19,18 @@ public interface MessagesRepository extends JpaRepository<MessageEntity, Long> {
 
     Optional<Page<MessageEntity>> findByUserId(Long userId, Pageable pageable);
 
+    // @Query("SELET m FROM MessageEntity m ")
+    Optional<MessageEntity> findByMessageId(Long messageId);
+
+    @Modifying
+    @Transactional
+    void deleteByChatId(Long chatId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE MessageEntity m SET m.content = :content, m.edited = TRUE WHERE m.messageId = :messageId")
+    void updateMessage(@Param("messageId") Long messageId, @Param("content") String content);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM MessageEntity m WHERE m.messageId = :messageId")

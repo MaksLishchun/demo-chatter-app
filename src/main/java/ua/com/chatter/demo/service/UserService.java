@@ -58,6 +58,7 @@ public class UserService implements UserDetailsService {
                 usersEntities.getPhoneNumber(),
                 usersEntities.getDateOfBirth(),
                 usersEntities.getImageUrl(),
-                usersEntities.getLastActiveTime());
+                usersEntities.getLastActiveTime(),
+                usersEntities.getStatus());
     }
 }

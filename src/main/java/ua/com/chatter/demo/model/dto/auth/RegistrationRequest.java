@@ -1,4 +1,4 @@
-package ua.com.chatter.demo.model.dto;
+package ua.com.chatter.demo.model.dto.auth;
 
 public class RegistrationRequest {
     private String firstName;
@@ -23,8 +23,6 @@ public class RegistrationRequest {
         this.dateOfBirth = dateOfBirth;
         this.imageUrl = imageUrl;
     }
-
-
 
     public String getFirstName() {
         return this.firstName;

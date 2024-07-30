@@ -16,8 +16,9 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 
 import lombok.extern.slf4j.Slf4j;
 
+//use if add keys to ws url
 @Slf4j
-public class ChatterWebSocketInterceptor extends HttpSessionHandshakeInterceptor {
+public class WebSocketInterceptor extends HttpSessionHandshakeInterceptor {
 
     @Override
     public boolean beforeHandshake(@NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response,
@@ -25,13 +26,13 @@ public class ChatterWebSocketInterceptor extends HttpSessionHandshakeInterceptor
 
         try {
             String chatIdStr = splitQuery(request.getURI()).get("chatId").get(0);
-            String userIdStr = splitQuery(request.getURI()).get("userId").get(0);
+            // String userIdStr = splitQuery(request.getURI()).get("userId").get(0);
 
-            if (userIdStr != null && chatIdStr != null) {
-                Long userId = Long.valueOf(userIdStr);
+            if (chatIdStr != null) {
+                // Long userId = Long.valueOf(userIdStr);
                 Long chatId = Long.valueOf(chatIdStr);
 
-                attributes.put("userId", userId);
+                // attributes.put("userId", userId);
                 attributes.put("chatId", chatId);
             }
         } catch (UnsupportedEncodingException exp) {

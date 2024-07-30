@@ -6,17 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.com.chatter.demo.model.dto.ChatterDefaultResponse;
 import ua.com.chatter.demo.model.dto.ErrorType;
-import ua.com.chatter.demo.model.dto.MessageDTO;
-import ua.com.chatter.demo.model.dto.MessageRequest;
 import ua.com.chatter.demo.model.dto.PageWrapper;
+import ua.com.chatter.demo.model.dto.message.MessageDTO;
 import ua.com.chatter.demo.service.MessagessService;
 
 
@@ -31,7 +28,7 @@ public class MessagesController {
     public ResponseEntity<?> getMessages(@RequestParam Long chatId, @RequestParam int page) {
         try {
             Page<MessageDTO> elems = messagessService.getMessages(chatId, page);
-            PageWrapper<MessageDTO> messagesWrapper = new PageWrapper<MessageDTO>(elems.getContent(), elems.getNumber(), elems.getTotalPages());
+            PageWrapper<MessageDTO> messagesWrapper = new PageWrapper<>(elems.getContent(), elems.getNumber(), elems.getTotalPages());
 
             return ResponseEntity.ok(messagesWrapper);
         } catch (RuntimeException exc) {
@@ -43,19 +40,19 @@ public class MessagesController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<?> saveMessage(@RequestParam Long userId, @RequestParam Long chatId, @RequestBody MessageRequest message) {
-        try {
-            MessageDTO savedMessage = messagessService.saveMessage(message, userId, chatId);
-            return ResponseEntity.ok(savedMessage);
+    // @PostMapping
+    // public ResponseEntity<?> sendMessage(@RequestBody MessageRequest message) {
+    //     try {
+    //         MessageDTO savedMessage = messagessService.saveMessage(message);
+    //         return ResponseEntity.ok(savedMessage);
 
-        } catch (RuntimeException exc) {
-            return ResponseEntity.badRequest()
-                    .body(new ChatterDefaultResponse(400,
-                            exc.getMessage(),
-                            ErrorType.CHAT_IS_EMPTY));
-        }
-    }
+    //     } catch (RuntimeException exc) {
+    //         return ResponseEntity.badRequest()
+    //                 .body(new ChatterDefaultResponse(400,
+    //                         exc.getMessage(),
+    //                         ErrorType.CHAT_IS_EMPTY));
+    //     }
+    // }
 
     @DeleteMapping
     public ResponseEntity<?> deleteMessage(@RequestParam Long messageId) {

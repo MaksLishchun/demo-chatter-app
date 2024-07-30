@@ -1,4 +1,4 @@
-package ua.com.chatter.demo.model.dto;
+package ua.com.chatter.demo.model.dto.auth;
 
 
 public class AuthenticationRequest {

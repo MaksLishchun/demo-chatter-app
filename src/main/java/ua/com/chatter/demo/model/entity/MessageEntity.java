@@ -28,21 +28,16 @@ public class MessageEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+    private Boolean edited;
 
     public MessageEntity() {}
-
-
-    public MessageEntity(LocalDateTime createdAt, String content) {
-        this.createdAt = createdAt;
-        this.content = content;
-    }
     
-
-    public MessageEntity(LocalDateTime createdAt, String content, ChatEntity chat, UserEntity user) {
+    public MessageEntity(LocalDateTime createdAt, String content, ChatEntity chat, UserEntity user, Boolean edited) {
         this.createdAt = createdAt;
         this.content = content;
         this.chat = chat;
         this.user = user;
+        this.edited = edited;
     }
 
     public Long getMessageId() {
@@ -84,5 +79,14 @@ public class MessageEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public Boolean isEdited() {
+        return this.edited;
+    }
+
+    public void setEdited(Boolean edited) {
+        this.edited = edited;
+    }
+
 }
 

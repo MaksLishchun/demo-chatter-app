@@ -2,12 +2,11 @@ package ua.com.chatter.demo.websocket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -19,7 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import lombok.extern.slf4j.Slf4j;
-import ua.com.chatter.demo.model.dto.ChatterMessageDTO;
+import ua.com.chatter.demo.model.dto.MessageDTO;
+import ua.com.chatter.demo.model.dto.MessageRequest;
 import ua.com.chatter.demo.service.MessagessService;
 
 @Slf4j
@@ -28,48 +28,44 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
 
     private final List<WebSocketSession> sessions = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Map<String, String> keysMap = new HashMap<>();
+    private final Map<String, Long> keysMap = new HashMap<>();
 
     @Autowired
     private MessagessService messagessService;
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
 
         Map<String, Object> attributes = session.getAttributes();
-        String key = (String) attributes.get("key");
-
-        log.info("Connected: " + session.getId() + " with key: " + key);
+        Long chatId = (Long) attributes.get("chatId");
         
-        if (!isValidKey(key)) {
+        if (chatId == null) {
             session.close(CloseStatus.NOT_ACCEPTABLE);
             return;
         }
 
-        if (sessions.size() > 1) {
-            Set<WebSocketSession> duplicates = findDuplicates(sessions);
-            sessions.removeAll(duplicates);
-        }
-
         sessions.add(session);
-        keysMap.put(session.getId(), key);
+        keysMap.put(session.getId(), chatId);
         objectMapper.registerModule(new JavaTimeModule());
+        log.info("Registered connection");
     }
 
     @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+    public void handleMessage(@NonNull WebSocketSession session, @NonNull WebSocketMessage<?> message) throws Exception {
         Map<String, Object> attributes = session.getAttributes();
-        String currentChatKey = (String) attributes.get("key");
+        Long userId = (Long) attributes.get("userId");
+        Long chatId = (Long) attributes.get("chatId");
 
         Object mesageObj = message.getPayload();
         log.info(String.format("Got message is %s", mesageObj.getClass().getName()));
 
-        ChatterMessageDTO chatterMessage = objectMapper.readValue(message.getPayload().toString(), ChatterMessageDTO.class);
+        MessageRequest chatterMessage = objectMapper.readValue(message.getPayload().toString(), MessageRequest.class);
 
-        ChatterMessageDTO savedMessage = messagessService.saveMessage(chatterMessage);
+        MessageDTO savedMessage = messagessService.saveMessage(chatterMessage, userId, chatId);
+        
         for (WebSocketSession elem : sessions) {
-            String chatKey = keysMap.get(elem.getId());
-            if (elem.isOpen() && chatKey.equals(currentChatKey)) {
+            Long elemChatId = keysMap.get(elem.getId());
+            if (elem.isOpen() && elemChatId.equals(chatId)) {
                 elem.sendMessage(new TextMessage(savedMessage.toJson()));
             }
         }
@@ -77,12 +73,12 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
     }
 
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    public void handleTransportError(@NonNull WebSocketSession session, @NonNull Throwable exception) throws Exception {
         session.close();
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+    public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus closeStatus) throws Exception {
         sessions.remove(session);
         keysMap.remove(session.getId());
         log.info("Connection closed");
@@ -93,20 +89,4 @@ public class ChatterWebSocketHandler implements WebSocketHandler {
         return false;
     }
 
-    private boolean isValidKey(String key) {
-        return key != null && !key.isEmpty();
-    }
-
-    public Set<WebSocketSession> findDuplicates(List<WebSocketSession> listContainingDuplicates) {
-        final Set<WebSocketSession> setToReturn = new HashSet<>();
-        final Set<WebSocketSession> set1 = new HashSet<>();
-
-        for (int index = 0; index < listContainingDuplicates.size() - 1; index++) {
-            WebSocketSession item = listContainingDuplicates.get(index);
-            if (!set1.add(item)) {
-                setToReturn.add(item);
-            }
-        } 
-        return setToReturn;
-    }
 }

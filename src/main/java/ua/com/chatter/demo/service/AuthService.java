@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import ua.com.chatter.demo.model.dto.RegistrationRequest;
-import ua.com.chatter.demo.model.entity.ChatterUserEntity;
+import ua.com.chatter.demo.model.entity.UserEntity;
 import ua.com.chatter.demo.repository.UserRepository;
 
 @Service
@@ -30,7 +30,7 @@ public class AuthService {
             throw new RuntimeException("Phone number is already taken!");
         }
 
-        ChatterUserEntity user = new ChatterUserEntity();
+        UserEntity user = new UserEntity();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
@@ -45,7 +45,7 @@ public class AuthService {
 
     public boolean loginUser(String phoneNumber, String password) {
         log.info("Login: phoneNumber -- " + phoneNumber);
-        ChatterUserEntity user = userRepository.findByPhoneNumber(phoneNumber)
+        UserEntity user = userRepository.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new RuntimeException("User not found with phoneNumber: " + phoneNumber));
 
          log.info("Login: user name -- " + user.getFirstName());

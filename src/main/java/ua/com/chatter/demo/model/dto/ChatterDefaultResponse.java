@@ -11,6 +11,10 @@ public class ChatterDefaultResponse {
     public ChatterDefaultResponse() {
     }
 
+    public ChatterDefaultResponse(Integer code, String message) {
+        this.message = message;
+        this.code = code;
+    }
 
     public ChatterDefaultResponse(Integer code, String message, @Nullable ErrorType errorType) {
         this.message = message;

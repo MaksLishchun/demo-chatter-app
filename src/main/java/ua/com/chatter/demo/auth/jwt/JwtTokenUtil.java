@@ -14,13 +14,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import ua.com.chatter.demo.utils.ChatterConstants;
 
 @Component
 public class JwtTokenUtil {
 
     private final static String JWS_SECRET = "V9mm9RkHt0hncBBg6PKPIVFcPcGduQFqsAzRiXa3athuW/l1LeNHvhhkX7m0ntS3HqGr7QW1MmYmvYtl/iQI4w==";
-
-    private final static long TOKEN_VALIDITY = 3600;
 
     // retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -64,7 +63,7 @@ public class JwtTokenUtil {
                 .add(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
+                .expiration(new Date(System.currentTimeMillis() + ChatterConstants.TOKEN_LIFECYCLE_TIME))
                 .and()
                 .signWith(getSigningKey())
                 .compact();

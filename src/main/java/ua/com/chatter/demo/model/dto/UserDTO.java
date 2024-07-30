@@ -2,7 +2,7 @@ package ua.com.chatter.demo.model.dto;
 
 import java.time.LocalDateTime;
 
-public class ChatterUserDTO {
+public class UserDTO {
     private Long userId;
     private String firstName;
     private String lastName;
@@ -13,11 +13,11 @@ public class ChatterUserDTO {
     private LocalDateTime lastActiveTime;
 
 
-    public ChatterUserDTO() {
+    public UserDTO() {
     }
 
 
-    public ChatterUserDTO(Long userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime) {
+    public UserDTO(Long userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String imageUrl, LocalDateTime lastActiveTime) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

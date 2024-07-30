@@ -42,7 +42,7 @@ public class AuthController {
             authService.registerUser(request);
 
             return ResponseEntity
-                .ok(new ChatterDefaultResponse(200, "User registered successfully!", null));
+                .ok(new ChatterDefaultResponse(200, "User registered successfully!"));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest()
                 .body(new ChatterDefaultResponse(400, e.getMessage(), ErrorType.REGISTRATION));

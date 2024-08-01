@@ -1,5 +1,6 @@
 package ua.com.chatter.demo.firebase;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -15,7 +16,8 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp initializeFirebase() throws IOException {
-        FileInputStream refreshToken = new FileInputStream("chatter-firebase-key.json");
+        File file = new File(this.getClass().getClassLoader().getResource("firebase_service_account_key.json").getFile());
+        FileInputStream refreshToken = new FileInputStream(file);
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(refreshToken))

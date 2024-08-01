@@ -19,7 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import lombok.extern.slf4j.Slf4j;
 import ua.com.chatter.demo.model.dto.message.MessageDTO;
-import ua.com.chatter.demo.model.dto.message.MessageRequest;
+import ua.com.chatter.demo.model.dto.request.MessageRequest;
 import ua.com.chatter.demo.service.MessagessService;
 
 @Slf4j

@@ -2,7 +2,6 @@ package ua.com.chatter.demo.service;
 
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public AuthService(UserRepository chatterUserRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = chatterUserRepository;
         this.passwordEncoder = passwordEncoder;

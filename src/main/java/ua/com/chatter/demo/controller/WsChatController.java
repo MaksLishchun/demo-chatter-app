@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import lombok.extern.slf4j.Slf4j;
-import ua.com.chatter.demo.model.dto.message.MessageRequest;
+import ua.com.chatter.demo.model.dto.request.MessageRequest;
 import ua.com.chatter.demo.model.entity.ChatEntity;
 import ua.com.chatter.demo.model.entity.UserEntity;
 import ua.com.chatter.demo.service.ChatService;

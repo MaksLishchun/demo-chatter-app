@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import ua.com.chatter.demo.model.ChatType;
 import ua.com.chatter.demo.model.dto.ChatterDefaultResponse;
-import ua.com.chatter.demo.model.dto.chat.ChatCreateRequest;
 import ua.com.chatter.demo.model.dto.chat.ChatDTO;
+import ua.com.chatter.demo.model.dto.request.ChatCreateRequest;
 import ua.com.chatter.demo.model.entity.ChatEntity;
 import ua.com.chatter.demo.model.entity.UserEntity;
 import ua.com.chatter.demo.repository.ChatRepository;

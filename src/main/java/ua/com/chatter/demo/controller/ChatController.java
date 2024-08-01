@@ -3,10 +3,6 @@ package ua.com.chatter.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.com.chatter.demo.model.dto.ChatterDefaultResponse;
 import ua.com.chatter.demo.model.dto.ErrorType;
 import ua.com.chatter.demo.model.dto.PageWrapper;
-import ua.com.chatter.demo.model.dto.chat.ChatCreateRequest;
 import ua.com.chatter.demo.model.dto.chat.ChatDTO;
+import ua.com.chatter.demo.model.dto.request.ChatCreateRequest;
 import ua.com.chatter.demo.service.ChatService;
 
 @RestController
@@ -28,9 +24,6 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     @PostMapping("/empty")
     public ResponseEntity<?> createEmptyChat(@RequestParam Long userId) {

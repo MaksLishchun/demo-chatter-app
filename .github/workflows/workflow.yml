@@ -29,9 +29,12 @@ jobs:
           
           # Create the JSON file in the resources directory
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > src/main/resources/firebase_service_account_key.json
+
+          # Знайти JAR файл у директорії target
+          JAR_FILE=$(ls target/*.jar | head -n 1)
           
           # Run the application with the path to the JSON file
-          java -Dfirebase.config.file=src/main/resources/firebase_service_account_key.json -jar target/your-app.jar
+          java -Dfirebase.config.file=src/main/resources/firebase_service_account_key.json -jar "$JAR_FILE" --spring.profiles.active=server
 
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}

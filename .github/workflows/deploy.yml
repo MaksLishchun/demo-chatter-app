@@ -37,10 +37,6 @@ jobs:
         JAR_NAME=$(./get-jar-name.sh)
         echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
 
-    - name: Build Project
-      run: |
-        mvn clean package -Dspring.profiles.active=server
-
     - name: Stop Render Database
       run: |
         curl -X PATCH https://api.render.com/v1/services/${{ secrets.RENDER_API_KEY }}/stop \
@@ -50,6 +46,10 @@ jobs:
       run: |
           curl -X PATCH https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/start \
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+
+    - name: Build Project
+      run: |
+        mvn clean package -Dspring.profiles.active=server
           
     - name: Deploy to Render
       env:

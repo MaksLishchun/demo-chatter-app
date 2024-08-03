@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
+        distribution: 'temurin'  # або 'zulu' чи інша доступна дистрибуція JDK
 
     - name: Create Firebase Service Account Key
       run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > src/main/resources/firebase_service_account_key.json

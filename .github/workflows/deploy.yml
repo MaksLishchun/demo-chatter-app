@@ -41,11 +41,36 @@ jobs:
       run: |
         mvn clean package -Dspring.profiles.active=server
 
+    - name: Stop Render Database
+      run: |
+        curl -X PATCH https://api.render.com/v1/services/${{ secrets.RENDER_API_KEY }}/stop \
+        -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+
+    - name: Start Render Database
+      run: |
+          curl -X PATCH https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/start \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+          
     - name: Deploy to Render
       env:
+        # згенерований ключ на Render
         RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        # Render hostname
         RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        # шлях до БД
+        RENDER_DATABASE_URL: ${{ secrets.RENDER_DATABASE_URL }}  # Додайте URL бази даних
+        # імʼя користувача
+        RENDER_DB_USER_NAME: ${{ secrets.RENDER_DB_USER_NAME }}
+        # пароль з лінки Render для запуску БД
+        RENDER_PGPASSWORD: ${{ secrets.RENDER_PGPASSWORD }}
+        # імʼя БД
+        RENDER_DATABASE_SERVICE_ID: ${{ secrets.RENDER_DATABASE_SERVICE_ID }}
       run: |
+        # Наприклад, ви можете перевірити стан бази даних
+        # curl -X POST "https://api.render.com/v1/services/$RENDER_DATABASE_SERVICE_ID/restart" \
+        #   -H "Authorization: Bearer $RENDER_API_KEY" \
+        #   -H "Content-Type: application/json"
+
         JAR_NAME=$(echo $JAR_NAME)
         VERSION=$(echo $VERSION)
         curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \

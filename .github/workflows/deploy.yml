@@ -1,0 +1,50 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # або будь-яка інша гілка, яку ти використовуєш
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+
+    - name: Create Firebase Service Account Key
+      run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > src/main/resources/firebase_service_account_key.json
+
+    - name: Extract Version from pom.xml
+      id: extract-version
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Build Project
+      run: |
+        ./mvnw clean package -DskipTests
+
+    - name: Get JAR Name
+      id: get-jar-name
+      run: |
+        JAR_NAME=$(./get-jar-name.sh)
+        echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+      run: |
+        JAR_NAME=$(echo $JAR_NAME)
+        VERSION=$(echo $VERSION)
+        curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
+          -H "Authorization: Bearer $RENDER_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{"branch": "main", "version": "'"$VERSION"'", "jar_name": "'"$JAR_NAME"'"}'

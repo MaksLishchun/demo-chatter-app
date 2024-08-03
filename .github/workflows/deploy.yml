@@ -28,15 +28,18 @@ jobs:
         VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
         echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-    - name: Build Project
-      run: |
-        mvn clean package -DskipTests
+    - name: Make script executable
+      run: chmod +x ./get-jar-name.sh
 
     - name: Get JAR Name
       id: get-jar-name
       run: |
         JAR_NAME=$(./get-jar-name.sh)
         echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
+
+    - name: Build Project
+      run: |
+        mvn clean package -DskipTests
 
     - name: Deploy to Render
       env:

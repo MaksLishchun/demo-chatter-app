@@ -1,22 +1,20 @@
 package ua.com.chatter.demo.model.dto;
 
-import io.micrometer.common.lang.Nullable;
-
-public class ChatterDefaultResponse {
+public class ErrorResponse {
 
     private String message;
     private Integer code;
-    private @Nullable ErrorType errorType;
+    private ErrorType errorType;
 
-    public ChatterDefaultResponse() {
+    public ErrorResponse() {
     }
 
-    public ChatterDefaultResponse(Integer code, String message) {
+    public ErrorResponse(Integer code, String message) {
         this.message = message;
         this.code = code;
     }
 
-    public ChatterDefaultResponse(Integer code, String message, @Nullable ErrorType errorType) {
+    public ErrorResponse(Integer code, String message, ErrorType errorType) {
         this.message = message;
         this.code = code;
         this.errorType = errorType;

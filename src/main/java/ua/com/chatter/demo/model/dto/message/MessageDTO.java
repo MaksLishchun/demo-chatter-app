@@ -10,15 +10,17 @@ public class MessageDTO {
     private LocalDateTime createdAt;
     private String content;
     private Boolean edited;
+    private Long userId;
 
     public MessageDTO() {}
 
 
-    public MessageDTO(Long messageId, LocalDateTime createdAt, String content, Boolean edited) {
+    public MessageDTO(Long messageId, LocalDateTime createdAt, String content, Boolean edited, Long userId) {
         this.messageId = messageId;
         this.createdAt = createdAt;
         this.content = content;
         this.edited = edited;
+        this.userId = userId;
     }
 
 
@@ -55,6 +57,13 @@ public class MessageDTO {
         this.edited = edited;
     }
 
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String toJson() {
         return GsonFormatter.GSON.toJson(this, MessageDTO.class);

@@ -15,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import ua.com.chatter.demo.utils.ChatterConstants;
+import ua.com.chatter.demo.utils.exceptions.auth.JwtGenerationException;
 
 @Component
 public class JwtTokenUtil {
@@ -58,6 +59,7 @@ public class JwtTokenUtil {
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
+        try {
         return Jwts.builder()
                 .claims()
                 .add(claims)
@@ -67,6 +69,9 @@ public class JwtTokenUtil {
                 .and()
                 .signWith(getSigningKey())
                 .compact();
+        } catch (RuntimeException exp) {
+            throw new JwtGenerationException(exp.getMessage());
+        }
     }
 
     private SecretKey getSigningKey() {

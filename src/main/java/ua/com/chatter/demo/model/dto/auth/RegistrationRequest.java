@@ -7,21 +7,18 @@ public class RegistrationRequest {
     private String password;
     private String phoneNumber;
     private String dateOfBirth;
-    private String imageUrl;
-
 
     public RegistrationRequest() {
     }
 
 
-    public RegistrationRequest(String firstName, String lastName, String email, String password, String phoneNumber, String dateOfBirth, String imageUrl) {
+    public RegistrationRequest(String firstName, String lastName, String email, String password, String phoneNumber, String dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
-        this.imageUrl = imageUrl;
     }
 
     public String getFirstName() {
@@ -70,14 +67,6 @@ public class RegistrationRequest {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getImageUrl() {
-        return this.imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
 }

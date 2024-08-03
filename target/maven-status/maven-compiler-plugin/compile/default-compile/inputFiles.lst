@@ -3,7 +3,7 @@
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/jwt/JwtRequestFilter.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/jwt/JwtTokenUtil.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/AuthController.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/ChatController.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/ChatsController.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/FileController.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/MessagesController.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/controller/NotificationController.java
@@ -13,7 +13,7 @@
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/firebase/NotificationService.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/ChatType.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/UserActivityStatus.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/dto/ChatterDefaultResponse.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/dto/ErrorResponse.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/dto/ErrorType.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/dto/PageWrapper.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/model/dto/UserDTO.java
@@ -42,10 +42,13 @@
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/ChatterConstants.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/GsonFormatter.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/LocalDateTimeAdapter.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/ChatIsExistException.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/ChatNotFoundException.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/MessagesNotFoundException.java
-/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/UserNotFoundException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/EntityIsExistException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/EntityIsNullException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/EntityNotFoundException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/ExceptionUtils.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/auth/JwtGenerationException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/auth/UserEmailIsExistException.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/utils/exceptions/auth/UserPhoneIsExistException.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/websocket/ChatterWebSocketHandler.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/websocket/WebSocketConfig.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/websocket/WebSocketInterceptor.java

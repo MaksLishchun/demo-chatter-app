@@ -3,6 +3,7 @@ package ua.com.chatter.demo.service;
 import java.time.LocalDateTime;
 
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import ua.com.chatter.demo.model.dto.auth.RegistrationRequest;
 import ua.com.chatter.demo.model.entity.UserEntity;
 import ua.com.chatter.demo.repository.UserRepository;
+import ua.com.chatter.demo.utils.exceptions.EntityIsExistException;
+import ua.com.chatter.demo.utils.exceptions.EntityIsNullException;
+import ua.com.chatter.demo.utils.exceptions.EntityNotFoundException;
+import ua.com.chatter.demo.utils.exceptions.auth.UserEmailIsExistException;
+import ua.com.chatter.demo.utils.exceptions.auth.UserPhoneIsExistException;
 
 @Service
 @Slf4j
@@ -25,7 +31,11 @@ public class AuthService {
 
     public void registerUser(RegistrationRequest request) {
         if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
-            throw new RuntimeException("Phone number is already taken!");
+            throw new UserPhoneIsExistException("Phone number is already taken!");
+        }
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new UserEmailIsExistException("Email is already taken!");
         }
 
         UserEntity user = new UserEntity();
@@ -35,18 +45,30 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhoneNumber(request.getPhoneNumber());
         user.setDateOfBirth(request.getDateOfBirth());
-        user.setImageUrl(request.getImageUrl());
+        // user.setImageUrl(request.getImageUrl());
         user.setLastActiveTime(LocalDateTime.now());
 
-        userRepository.save(user);
+        try {
+            UserEntity userEntity = userRepository.save(user);
+            if (userEntity == null) {
+                throw new EntityNotFoundException("User is not created");
+            }
+        } catch (IllegalArgumentException e) {
+            throw new EntityIsNullException("User can not be null");
+        } catch (OptimisticLockingFailureException e) {
+            throw new EntityIsExistException("User is exist");
+        }
+
     }
 
     public boolean loginUser(String phoneNumber, String password) {
-        log.info("Login: phoneNumber -- " + phoneNumber);
         UserEntity user = userRepository.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new RuntimeException("User not found with phoneNumber: " + phoneNumber));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with phoneNumber: " + phoneNumber));
 
-         log.info("Login: user name -- " + user.getFirstName());
         return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    public boolean existsByPhoneNumber(String phoneNumber) {
+        return userRepository.existsByPhoneNumber(phoneNumber);
     }
 }

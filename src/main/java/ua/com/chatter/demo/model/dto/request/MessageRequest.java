@@ -1,19 +1,18 @@
 package ua.com.chatter.demo.model.dto.request;
 
-import java.time.LocalDateTime;
+import javax.annotation.Nullable;
+
 
 public class MessageRequest {
 
-    private Long id;
+    private @Nullable Long id;
     private Long userId;
     private Long chatId;
-    private LocalDateTime createdAt;
     private String content;
 
     public MessageRequest() {}
 
-    public MessageRequest(LocalDateTime createdAt, String content) {
-        this.createdAt = createdAt;
+    public MessageRequest(String content) {
         this.content = content;
     }
 
@@ -23,14 +22,6 @@ public class MessageRequest {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Long getId() {

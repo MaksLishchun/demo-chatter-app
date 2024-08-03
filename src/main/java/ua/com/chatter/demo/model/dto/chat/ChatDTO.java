@@ -2,12 +2,14 @@ package ua.com.chatter.demo.model.dto.chat;
 
 import java.time.LocalDateTime;
 
+import javax.annotation.Nullable;
+
 import ua.com.chatter.demo.model.ChatType;
 
 public class ChatDTO {
     private Long chatId;
     private String chatName;
-    private String chatLogo;
+    private @Nullable String chatLogo;
     private ChatType type;
     private LocalDateTime lastMessageTime;
     private Long createdBy;

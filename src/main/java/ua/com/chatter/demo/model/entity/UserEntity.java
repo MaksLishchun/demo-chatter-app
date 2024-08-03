@@ -3,6 +3,8 @@ package ua.com.chatter.demo.model.entity;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,8 +32,9 @@ public class UserEntity {
     private String password;
     private String phoneNumber;
     private String dateOfBirth;
-    private String imageUrl;
+    private @Nullable String imageUrl;
     private LocalDateTime lastActiveTime;
+    private Boolean isActive;
 
     @Enumerated(EnumType.STRING)
     private UserActivityStatus status;
@@ -159,6 +162,13 @@ public class UserEntity {
         this.status = status;
     }
 
+    public Boolean isActive() {
+        return this.isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
 
     
 }

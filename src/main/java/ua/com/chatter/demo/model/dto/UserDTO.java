@@ -2,6 +2,8 @@ package ua.com.chatter.demo.model.dto;
 
 import java.time.LocalDateTime;
 
+import javax.annotation.Nullable;
+
 import ua.com.chatter.demo.model.UserActivityStatus;
 
 public class UserDTO {
@@ -11,7 +13,7 @@ public class UserDTO {
     private String email;
     private String phoneNumber;
     private String dateOfBirth;
-    private String imageUrl;
+    private @Nullable String imageUrl;
     private LocalDateTime lastActiveTime;
     private UserActivityStatus status;
 

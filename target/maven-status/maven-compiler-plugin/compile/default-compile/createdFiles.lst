@@ -28,6 +28,7 @@ ua/com/chatter/demo/model/dto/auth/RegistrationRequest.class
 ua/com/chatter/demo/utils/exceptions/auth/UserPhoneIsExistException.class
 ua/com/chatter/demo/model/dto/request/ChatCreateRequest.class
 ua/com/chatter/demo/model/dto/message/MessageDTO.class
+ua/com/chatter/demo/auth/FilterConfig.class
 ua/com/chatter/demo/utils/exceptions/EntityIsNullException.class
 ua/com/chatter/demo/utils/ChatterConstants.class
 ua/com/chatter/demo/controller/AuthController.class
@@ -52,4 +53,5 @@ ua/com/chatter/demo/repository/UserRepository.class
 ua/com/chatter/demo/model/dto/PageWrapper.class
 ua/com/chatter/demo/repository/FileRepository.class
 ua/com/chatter/demo/service/AuthService.class
+ua/com/chatter/demo/auth/RateLimitFilter.class
 ua/com/chatter/demo/websocket/WebSocketInterceptor.class

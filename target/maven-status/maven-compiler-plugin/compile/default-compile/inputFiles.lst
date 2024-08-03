@@ -1,4 +1,6 @@
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/DemoApplication.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/FilterConfig.java
+/Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/RateLimitFilter.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/SecurityConfig.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/jwt/JwtRequestFilter.java
 /Users/ml/Work/chatter-be/src/main/java/ua/com/chatter/demo/auth/jwt/JwtTokenUtil.java

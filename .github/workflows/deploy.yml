@@ -39,7 +39,7 @@ jobs:
 
     - name: Build Project
       run: |
-        mvn clean package -DskipTests
+        mvn clean package -Dspring.profiles.active=server
 
     - name: Deploy to Render
       env:

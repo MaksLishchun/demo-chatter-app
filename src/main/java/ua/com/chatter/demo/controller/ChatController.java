@@ -57,7 +57,7 @@ public class ChatController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteChat(@RequestParam Long chatId) {
         return ResponseEntity.ok(chatService.deleteChat(chatId));
     }

@@ -40,21 +40,7 @@ public class MessagesController {
 
     }
 
-    // @PostMapping
-    // public ResponseEntity<?> sendMessage(@RequestBody MessageRequest message) {
-    //     try {
-    //         MessageDTO savedMessage = messagessService.saveMessage(message);
-    //         return ResponseEntity.ok(savedMessage);
-
-    //     } catch (RuntimeException exc) {
-    //         return ResponseEntity.badRequest()
-    //                 .body(new ChatterDefaultResponse(400,
-    //                         exc.getMessage(),
-    //                         ErrorType.CHAT_IS_EMPTY));
-    //     }
-    // }
-
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteMessage(@RequestParam Long messageId) {
         return ResponseEntity.ok(messagessService.deleteMessage(messageId));
     }

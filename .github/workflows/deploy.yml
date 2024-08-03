@@ -30,7 +30,7 @@ jobs:
 
     - name: Build Project
       run: |
-        ./mvnw clean package -DskipTests
+        mvn clean package -DskipTests
 
     - name: Get JAR Name
       id: get-jar-name

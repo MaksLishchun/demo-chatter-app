@@ -11,6 +11,12 @@ RUN mvn dependency:go-offline
 # Декодуємо закодований ключ і створюємо файл конфігурації Firebase
 RUN echo "$FIREBASE_ACCOUNT_KEY_ENCODED" | base64 --decode > src/main/resources/firebase_service_account_key.json
 
+# Перевірка наявності файлу
+RUN ls -l src/main/resources
+
+# Перевірка вмісту файлу
+RUN cat src/main/resources/firebase_service_account_key.json
+
 RUN mvn clean install -Dspring.profiles.active=server
 
 # # Use a smaller image to run the app

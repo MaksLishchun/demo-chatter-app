@@ -8,12 +8,6 @@ COPY . .
 
 RUN mvn dependency:go-offline
 
-# Перевірка наявності файлу
-RUN ls -l src/main/resources
-
-# Декодуємо закодований ключ і створюємо файл конфігурації Firebase
-# ENV FB_KEY_BASE64 --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED
-# RUN --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED base64 --decode > src/main/resources/firebase_service_account_key.json
 RUN echo "${--mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED}" | base64 --decode > src/main/resources/firebase_service_account_key.json
 
 # Перевірка наявності файлу
@@ -24,30 +18,6 @@ RUN cat src/main/resources/firebase_service_account_key.json
 
 RUN mvn clean install -Dspring.profiles.active=server
 
-# # Use a smaller image to run the app
-# FROM openjdk:17-oracle
-
-# # Set the working directory
-# WORKDIR /app
-
-# # Copy the jar file from the build stage
-# COPY --from=build /app/target/$(./get-jar-name.sh) ./app.jar
-
-# # Expose the port the app runs on
-# EXPOSE 8080
-
-# # Run the app
-# CMD ["java", "-jar", "app.jar"]
-
-# Використовуємо базовий образ OpenJDK 17
-# FROM openjdk:17-oracle
-
-# Вказуємо робочу директорію
-# WORKDIR /app
-
-# RUN mvn clean install -Dspring.profiles.active=server
-
-# Копіюємо файл jar до контейнера
 COPY target/*.jar app.jar
 
 # Вказуємо команду запуску

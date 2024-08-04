@@ -4,16 +4,13 @@ FROM maven:3.8.4-openjdk-17 AS build
 # # Set the working directory
 WORKDIR /app
 
-# # Copy the pom.xml and install dependencies
-COPY pom.xml .
-RUN mvn dependency:go-offline
+COPY . .
 
+RUN mvn dependency:go-offline
 
 # Декодуємо закодований ключ і створюємо файл конфігурації Firebase
 RUN echo "$FIREBASE_ACCOUNT_KEY_ENCODED" | base64 --decode > src/main/resources/firebase_service_account_key.json
 
-# # Copy the rest of the source code and build the app
-COPY . .
 RUN mvn clean install -Dspring.profiles.active=server
 
 # # Use a smaller image to run the app

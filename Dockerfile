@@ -12,9 +12,9 @@ RUN mvn dependency:go-offline
 RUN ls -l src/main/resources
 
 # Декодуємо закодований ключ і створюємо файл конфігурації Firebase
-ENV FB_KEY_BASE64 --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED
+# ENV FB_KEY_BASE64 --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED
 # RUN --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED base64 --decode > src/main/resources/firebase_service_account_key.json
-RUN echo "$FB_KEY_BASE64" | base64 --decode > src/main/resources/firebase_service_account_key.json
+RUN echo "${--mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED}" | base64 --decode > src/main/resources/firebase_service_account_key.json
 
 # Перевірка наявності файлу
 RUN ls -l src/main/resources

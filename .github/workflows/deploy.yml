@@ -20,7 +20,10 @@ jobs:
         distribution: 'temurin'  # або 'zulu' чи інша доступна дистрибуція JDK
 
     - name: Create Firebase Service Account Key
-      run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > src/main/resources/firebase_service_account_key.json
+      # run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" > src/main/resources/firebase_service_account_key.json
+      env:
+          DATA: ${{ secrets.FIREBASE_ACCOUNT_KEY_ENCODED }}
+      run: echo $DATA | base64 -di > src/main/resources/firebase_service_account_key.json
 
     - name: Extract Version from pom.xml
       id: extract-version

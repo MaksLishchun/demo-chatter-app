@@ -1,4 +1,5 @@
-# # Use an official Maven image with JDK 17 to build the app
+# syntax=docker/dockerfile:1.0.0
+
 FROM maven:3.8.4-openjdk-17 AS build
 
 # # Set the working directory

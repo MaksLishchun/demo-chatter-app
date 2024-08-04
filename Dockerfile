@@ -33,6 +33,8 @@ FROM openjdk:17-oracle
 # Вказуємо робочу директорію
 WORKDIR /app
 
+RUN mvn clean install -Dspring.profiles.active=server
+
 # Копіюємо файл jar до контейнера
 COPY target/*.jar app.jar
 

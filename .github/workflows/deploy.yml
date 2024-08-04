@@ -39,12 +39,12 @@ jobs:
 
     # - name: Stop Render Database
     #   run: |
-    #     curl -X PATCH https://api.render.com/v1/services/${{ secrets.RENDER_API_KEY }}/stop \
+    #     curl -X PATCH https://api.render.com/v1/services/secrets.RENDER_API_KEY }}/stop \
     #     -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
 
-    - name: Start Render Database
-      run: |
-          ${{ secrets.RENDER_PGPASSWORD }} psql -h ${{ secrets.RENDER_DATABASE_SERVICE_ID }}.frankfurt-postgres.render.com -U ${{ secrets.RENDER_DB_USER_NAME }} ${{ secrets.RENDER_DB_NAME }}
+    # - name: Start Render Database
+    #   run: |
+    #       ${{ secrets.RENDER_PGPASSWORD }} psql -h ${{ secrets.RENDER_DATABASE_SERVICE_ID }}.frankfurt-postgres.render.com -U ${{ secrets.RENDER_DB_USER_NAME }} ${{ secrets.RENDER_DB_NAME }}
 
     - name: Build Project
       run: |

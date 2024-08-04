@@ -8,6 +8,10 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
+
+# Декодуємо закодований ключ і створюємо файл конфігурації Firebase
+RUN echo "$FIREBASE_ACCOUNT_KEY_ENCODED" | base64 --decode > src/main/resources/firebase_service_account_key.json
+
 # # Copy the rest of the source code and build the app
 COPY . .
 RUN mvn clean install -Dspring.profiles.active=server

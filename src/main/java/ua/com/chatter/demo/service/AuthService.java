@@ -47,6 +47,7 @@ public class AuthService {
         user.setDateOfBirth(request.getDateOfBirth());
         // user.setImageUrl(request.getImageUrl());
         user.setLastActiveTime(LocalDateTime.now());
+        user.setIsActive(true);
 
         try {
             UserEntity userEntity = userRepository.save(user);

@@ -1,16 +1,16 @@
 # # Use an official Maven image with JDK 17 to build the app
-# FROM maven:3.8.4-openjdk-17 AS build
+FROM maven:3.8.4-openjdk-17 AS build
 
 # # Set the working directory
-# WORKDIR /app
+WORKDIR /app
 
 # # Copy the pom.xml and install dependencies
-# COPY pom.xml .
-# RUN mvn dependency:go-offline
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
 # # Copy the rest of the source code and build the app
-# COPY src ./src
-# RUN mvn package
+COPY . .
+RUN mvn clean install -Dspring.profiles.active=server
 
 # # Use a smaller image to run the app
 # FROM openjdk:17-oracle
@@ -28,12 +28,12 @@
 # CMD ["java", "-jar", "app.jar"]
 
 # Використовуємо базовий образ OpenJDK 17
-FROM openjdk:17-oracle
+# FROM openjdk:17-oracle
 
 # Вказуємо робочу директорію
-WORKDIR /app
+# WORKDIR /app
 
-RUN mvn clean install -Dspring.profiles.active=server
+# RUN mvn clean install -Dspring.profiles.active=server
 
 # Копіюємо файл jar до контейнера
 COPY target/*.jar app.jar

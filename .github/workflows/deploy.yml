@@ -67,11 +67,16 @@ jobs:
         RENDER_PGPASSWORD: ${{ secrets.RENDER_PGPASSWORD }}
         # імʼя БД
         RENDER_DATABASE_SERVICE_ID: ${{ secrets.RENDER_DATABASE_SERVICE_ID }}
-      run: |
-        JAR_NAME=$(echo $JAR_NAME)
-        VERSION=$(echo $VERSION)
-        curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
-          -H "Authorization: Bearer $RENDER_API_KEY" \
-          -H "Content-Type: application/json" \
-          # -d '{"clearCache": false, "branch": "main", "version": "'"$VERSION"'", "jar_name": "'"$JAR_NAME"'"}'
+    - name: Deploy to Render
+      uses: render-examples/action-deploy@v1
+      with:
+        serviceId: ${{ secrets.RENDER_SERVICE_ID }}
+        apiKey: ${{ secrets.RENDER_API_KEY }}
+      # run: |
+      #   JAR_NAME=$(echo $JAR_NAME)
+      #   VERSION=$(echo $VERSION)
+      #   curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
+      #     -H "Authorization: Bearer $RENDER_API_KEY" \
+      #     -H "Content-Type: application/json" \
+      #     # -d '{"clearCache": false, "branch": "main", "version": "'"$VERSION"'", "jar_name": "'"$JAR_NAME"'"}'
 

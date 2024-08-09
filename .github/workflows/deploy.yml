@@ -81,6 +81,3 @@ jobs:
           -d '{"clearCache": false}'
           # -d '{"branch": "main", "version": "'"$VERSION"'", "jar_name": "'"$JAR_NAME"'"}'
 
-
-          - name: Deploy to Render
-

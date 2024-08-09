@@ -68,11 +68,6 @@ jobs:
         # імʼя БД
         RENDER_DATABASE_SERVICE_ID: ${{ secrets.RENDER_DATABASE_SERVICE_ID }}
       run: |
-        # Наприклад, ви можете перевірити стан бази даних
-        # curl -X POST "https://api.render.com/v1/services/$RENDER_DATABASE_SERVICE_ID/restart" \
-        #   -H "Authorization: Bearer $RENDER_API_KEY" \
-        #   -H "Content-Type: application/json"
-
         JAR_NAME=$(echo $JAR_NAME)
         VERSION=$(echo $VERSION)
         curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \

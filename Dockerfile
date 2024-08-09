@@ -9,15 +9,15 @@ COPY . .
 
 RUN mvn dependency:go-offline
 
-RUN --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED cat /etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED
+# RUN --mount=type=secret,id=FIREBASE_ACCOUNT_KEY_ENCODED,dst=/etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED cat /etc/secrets/FIREBASE_ACCOUNT_KEY_ENCODED
 
-RUN echo "$FIREBASE_ACCOUNT_KEY_ENCODED" | base64 --decode > src/main/resources/firebase_service_account_key.json
+# RUN echo "$FIREBASE_ACCOUNT_KEY_ENCODED" | base64 --decode > src/main/resources/firebase_service_account_key.json
 
 # Перевірка наявності файлу
 RUN ls -l src/main/resources
 
 
-RUN mvn clean install -Dspring.profiles.active=server
+RUN mvn install -Dspring.profiles.active=server
 
 COPY target/*.jar app.jar
 
